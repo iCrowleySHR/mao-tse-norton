@@ -1,0 +1,95 @@
+```gitignore
+# =========================
+# Node.js
+# =========================
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Capacitor
+# =========================
+
+# Arquivos temporários do Capacitor
+.capacitor/
+
+# =========================
+# Android / Gradle
+# =========================
+
+android/.gradle/
+android/local.properties
+android/.idea/
+android/**/build/
+android/**/captures/
+
+# Android Studio
+*.iml
+
+# Kotlin
+*.kotlin_module
+
+# =========================
+# VS Code
+# =========================
+
+.vscode/
+!.vscode/extensions.json
+
+# =========================
+# Sistema operacional
+# =========================
+
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+*~
+
+# =========================
+# Logs
+# =========================
+
+logs/
+*.log
+
+# =========================
+# Ambiente
+# =========================
+
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =========================
+# Build
+# =========================
+
+dist/
+build/
+
+# =========================
+# APK / AAB gerados
+# =========================
+
+*.apk
+*.aab
+*.apks
+
+# =========================
+# Outros
+# =========================
+
+coverage/
+.cache/
+```
