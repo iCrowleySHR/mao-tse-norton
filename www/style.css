@@ -1,18 +1,61 @@
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg: #070707;
+    --panel: rgba(18, 18, 18, 0.82);
+    --panel-light: rgba(255, 255, 255, 0.06);
+    --border: rgba(255, 255, 255, 0.1);
+
+    --gold: #f5b642;
+    --gold-light: #ffd76a;
+
+    --text: #ffffff;
+    --text-soft: rgba(255, 255, 255, 0.62);
+    --text-muted: rgba(255, 255, 255, 0.35);
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+}
 
 body {
-    margin: 0;
     min-height: 100vh;
-
     display: flex;
     justify-content: center;
     align-items: center;
 
-    background: #000;
+    background:
+        radial-gradient(circle at 50% 35%,
+            #1c1c1c 0%,
+            #0b0b0b 45%,
+            #030303 100%);
 
     overflow: hidden;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: var(--text);
+
+    transition: background 0.8s ease;
 }
 
-/* Tela inicial */
+
+/* =========================================================
+   TELA INICIAL
+========================================================= */
 
 #telaInicial {
     position: fixed;
@@ -23,95 +66,770 @@ body {
     justify-content: center;
     align-items: center;
 
-    background: #000;
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(245, 182, 66, 0.12),
+            transparent 35%
+        ),
+        #050505;
+
     color: white;
 
     cursor: pointer;
 
-    z-index: 10;
+    z-index: 100;
 
-    font-family: Arial, sans-serif;
-    text-align: center;
+    transition:
+        opacity 0.8s ease,
+        visibility 0.8s ease;
+}
+
+#telaInicial::before {
+    content: "";
+
+    position: absolute;
+    width: 420px;
+    height: 420px;
+
+    border-radius: 50%;
+
+    background: rgba(245, 182, 66, 0.08);
+
+    filter: blur(80px);
+
+    animation: pulseGlow 4s ease-in-out infinite;
+
+    pointer-events: none;
+}
+
+#telaInicial.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
 }
 
 #telaInicial h1 {
-    margin: 0;
+    position: relative;
 
-    font-size: clamp(30px, 6vw, 70px);
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
 
-    animation: pulsar 1.5s ease-in-out infinite;
+    font-weight: 900;
+
+    letter-spacing: 8px;
+
+    text-align: center;
+
+    color: white;
+
+    text-shadow:
+        0 0 20px rgba(245, 182, 66, 0.15),
+        0 0 60px rgba(245, 182, 66, 0.08);
+}
+
+#telaInicial h1::after {
+    content: "";
+
+    display: block;
+
+    width: 80px;
+    height: 3px;
+
+    margin: 20px auto 0;
+
+    border-radius: 10px;
+
+    background: linear-gradient(
+        90deg,
+        transparent,
+        var(--gold),
+        transparent
+    );
 }
 
 #telaInicial p {
-    font-size: 20px;
-    margin-top: 10px;
+    position: relative;
+
+    margin-top: 20px;
+
+    font-size: clamp(0.8rem, 2vw, 1rem);
+
+    color: var(--text-muted);
+
+    letter-spacing: 6px;
+
+    text-transform: uppercase;
 }
 
-/* Imagem */
+#telaInicial .play-icon {
+    position: relative;
 
-.img {
+    width: 78px;
+    height: 78px;
+
+    margin-top: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-left: 4px;
+
+    border: 1px solid rgba(245, 182, 66, 0.35);
+
+    border-radius: 50%;
+
+    background: rgba(245, 182, 66, 0.08);
+
+    color: var(--gold);
+
+    font-size: 1.7rem;
+
+    box-shadow:
+        0 0 30px rgba(245, 182, 66, 0.08),
+        inset 0 0 20px rgba(245, 182, 66, 0.04);
+
+    animation: pulseButton 2s ease-in-out infinite;
+}
+
+#telaInicial .radio-info {
+    position: relative;
+
+    margin-top: 22px;
+
+    color: var(--text-muted);
+
+    font-size: 0.72rem;
+
+    letter-spacing: 3px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   PLAYER
+========================================================= */
+
+#player {
+    display: none;
+
+    width: 100vw;
+    height: 100vh;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+#player.visible {
+    display: block;
+}
+
+
+/* =========================================================
+   FUNDO DO PLAYER
+========================================================= */
+
+#player::before {
+    content: "";
+
+    position: absolute;
+    inset: -20%;
+
+    background:
+        radial-gradient(
+            circle at 50% 42%,
+            rgba(245, 182, 66, 0.13),
+            transparent 25%
+        );
+
+    filter: blur(30px);
+
+    pointer-events: none;
+}
+
+body.playing {
+    background:
+        radial-gradient(
+            circle at 50% 35%,
+            #222 0%,
+            #0b0b0b 45%,
+            #030303 100%
+        );
+}
+
+
+/* =========================================================
+   IMAGEM
+========================================================= */
+
+.img-wrapper {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    pointer-events: none;
+
+    padding-bottom: 150px;
+}
+
+.img-wrapper::before {
+    content: "";
+
+    position: absolute;
+
+    width: min(60vh, 500px);
+    height: min(60vh, 500px);
+
+    border-radius: 50%;
+
+    background: rgba(245, 182, 66, 0.12);
+
+    filter: blur(70px);
+
+    animation: discGlow 4s ease-in-out infinite;
+}
+
+.img-wrapper img {
+    position: relative;
+
+    width: min(48vh, 420px);
+    height: min(48vh, 420px);
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    user-select: none;
+    -webkit-user-drag: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.8),
+        0 0 80px rgba(245, 182, 66, 0.08);
+
+    animation: girar 24s linear infinite;
+
+    opacity: 0.88;
+}
+
+
+/* =========================================================
+   PAINEL DE CONTROLES
+========================================================= */
+
+.player-controls {
+    position: absolute;
+
+    bottom: 28px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: min(92%, 620px);
+
+    padding: 22px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 30, 30, 0.88),
+            rgba(8, 8, 8, 0.88)
+        );
+
+    backdrop-filter: blur(30px);
+    -webkit-backdrop-filter: blur(30px);
+
+    border: 1px solid var(--border);
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.65),
+        inset 0 1px rgba(255, 255, 255, 0.05);
+
+    z-index: 10;
+}
+
+
+/* =========================================================
+   INFORMAÇÕES DA MÚSICA
+========================================================= */
+
+.music-info {
+    text-align: center;
+
+    margin-bottom: 18px;
+}
+
+.music-title {
+    color: white;
+
+    font-size: 1.05rem;
+
+    font-weight: 600;
+
+    letter-spacing: 1px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.music-source {
+    margin-top: 6px;
+
+    color: var(--text-muted);
+
+    font-size: 0.7rem;
+
+    letter-spacing: 2px;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   CONTROLES
+========================================================= */
+
+.controls-buttons {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 18px;
+}
+
+.controls-buttons button {
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.045);
+
+    color: rgba(255, 255, 255, 0.7);
+
+    font-size: 1.05rem;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.controls-buttons button:hover {
+    transform: translateY(-2px);
+
+    background: rgba(245, 182, 66, 0.1);
+
+    border-color: rgba(245, 182, 66, 0.45);
+
+    color: var(--gold-light);
+}
+
+.controls-buttons button:active {
+    transform: scale(0.92);
+}
+
+#btnPlayPause {
+    width: 58px;
+    height: 58px;
+
+    background:
+        linear-gradient(
+            145deg,
+            var(--gold-light),
+            var(--gold)
+        );
+
+    border: none;
+
+    color: #111;
+
+    font-size: 1.35rem;
+
+    box-shadow:
+        0 8px 30px rgba(245, 182, 66, 0.2);
+}
+
+#btnPlayPause:hover {
+    background:
+        linear-gradient(
+            145deg,
+            #ffe18a,
+            #f5b642
+        );
+
+    color: #000;
+
+    transform: scale(1.06);
+
+    box-shadow:
+        0 10px 40px rgba(245, 182, 66, 0.3);
+}
+
+
+/* =========================================================
+   PROGRESSO
+========================================================= */
+
+.progress-container {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.time-current,
+.time-total {
+    min-width: 38px;
+
+    color: var(--text-muted);
+
+    font-size: 0.65rem;
+
+    font-variant-numeric: tabular-nums;
+}
+
+.time-total {
+    text-align: right;
+}
+
+#progressBar {
+    flex: 1;
+
+    height: 4px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+#progressBar::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: var(--gold-light);
+
+    box-shadow:
+        0 0 12px rgba(245, 182, 66, 0.4);
+
+    cursor: pointer;
+}
+
+#progressBar::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: var(--gold-light);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   VOLUME
+========================================================= */
+
+.volume-container {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.volume-icon {
+    font-size: 0.85rem;
+
+    opacity: 0.5;
+}
+
+#volumeControl {
+    width: 130px;
+
+    height: 4px;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    background: rgba(255, 255, 255, 0.1);
+
+    border-radius: 10px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+#volumeControl::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    cursor: pointer;
+}
+
+#volumeControl::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.7);
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   PLAYLIST
+========================================================= */
+
+.playlist-container {
+    position: relative;
+}
+
+.toggle-playlist {
+    width: 100%;
+
+    padding: 9px 14px;
+
+    border-radius: 12px;
+
+    border: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.035);
+
+    color: var(--text-soft);
+
+    font-size: 0.72rem;
+
+    letter-spacing: 1px;
+
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.toggle-playlist:hover {
+    background: rgba(245, 182, 66, 0.08);
+
+    border-color: rgba(245, 182, 66, 0.35);
+
+    color: white;
+}
+
+.playlist {
+    position: absolute;
+
+    bottom: 48px;
+    left: 0;
+    right: 0;
+
+    max-height: 280px;
+
+    padding: 12px;
+
+    overflow-y: auto;
+
+    background: rgba(8, 8, 8, 0.97);
+
+    backdrop-filter: blur(25px);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.7);
+}
+
+.playlist.hidden {
     display: none;
 }
 
-.img img {
-    max-width: 200vh;
-    max-height: 200vh;
+#playlistItems {
+    list-style: none;
 
+    max-height: 200px;
+
+    overflow-y: auto;
+}
+
+#playlistItems li {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 10px 12px;
+
+    margin-bottom: 3px;
+
+    border-radius: 9px;
+
+    color: var(--text-soft);
+
+    font-size: 0.78rem;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+#playlistItems li:hover {
+    background: rgba(255, 255, 255, 0.05);
+
+    color: white;
+}
+
+#playlistItems li.active {
+    background: rgba(245, 182, 66, 0.12);
+
+    color: var(--gold-light);
+}
+
+#playlistItems li .remove-btn {
+    background: none;
+
+    border: none;
+
+    color: rgba(255, 255, 255, 0.2);
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+#playlistItems li .remove-btn:hover {
+    color: #ff5c5c;
+}
+
+.playlist-footer {
+    display: flex;
+
+    gap: 7px;
+
+    padding-top: 8px;
+}
+
+.preset-btn {
+    flex: 1;
+
+    padding: 8px;
+
+    border-radius: 9px;
+
+    border: 1px solid var(--border);
+
+    background: rgba(255, 255, 255, 0.04);
+
+    color: var(--text-soft);
+
+    font-size: 0.7rem;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+}
+
+.preset-btn:hover {
+    background: rgba(245, 182, 66, 0.1);
+
+    border-color: rgba(245, 182, 66, 0.4);
+
+    color: var(--gold-light);
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+#audioStatus {
+    position: fixed;
+
+    bottom: 7px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    color: rgba(255, 255, 255, 0.3);
+
+    font-size: 0.62rem;
+
+    letter-spacing: 2px;
+
+    z-index: 5;
+
+    text-transform: uppercase;
+
+    pointer-events: none;
+}
+
+#player.visible #audioStatus {
     display: block;
 }
 
-/* Quando o jogo começa */
 
-body.playing {
-    background: linear-gradient(
-        45deg,
-        #ff0000,
-        #ff7300,
-        #ffeb00,
-        #00ff00,
-        #00ffff,
-        #0066ff,
-        #9900ff,
-        #ff00aa
-    );
-
-    background-size: 400% 400%;
-
-    animation: fundo 10s ease infinite;
-}
-
-body.playing .img {
-    display: block;
-}
-
-body.playing .img img {
-    animation: girar 3s linear infinite;
-}
-
-
-/* Fundo mudando de cor */
-
-@keyframes fundo {
-
-    0% {
-        background-position: 0% 50%;
-    }
-
-    50% {
-        background-position: 100% 50%;
-    }
-
-    100% {
-        background-position: 0% 50%;
-    }
-
-}
-
-
-/* Foto girando */
+/* =========================================================
+   ANIMAÇÕES
+========================================================= */
 
 @keyframes girar {
-
     from {
         transform: rotate(0deg);
     }
@@ -119,24 +837,147 @@ body.playing .img img {
     to {
         transform: rotate(360deg);
     }
-
 }
 
-
-/* Texto pulsando */
-
-@keyframes pulsar {
-
+@keyframes discGlow {
     0%,
     100% {
-        transform: scale(1);
-        opacity: 1;
+        opacity: 0.5;
+        transform: scale(0.95);
     }
 
     50% {
-        transform: scale(1.1);
-        opacity: 0.6;
+        opacity: 0.9;
+        transform: scale(1.08);
     }
-
 }
 
+@keyframes pulseGlow {
+    0%,
+    100% {
+        opacity: 0.5;
+        transform: scale(0.9);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+}
+
+@keyframes pulseButton {
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow:
+            0 0 0 rgba(245, 182, 66, 0);
+    }
+
+    50% {
+        transform: scale(1.05);
+        box-shadow:
+            0 0 35px rgba(245, 182, 66, 0.15);
+    }
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(245, 182, 66, 0.35);
+}
+
+
+/* =========================================================
+   RESPONSIVIDADE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .player-controls {
+        bottom: 18px;
+
+        width: 94%;
+
+        padding: 18px;
+    }
+
+    .img-wrapper {
+        padding-bottom: 160px;
+    }
+
+    .img-wrapper img {
+        width: min(52vh, 360px);
+        height: min(52vh, 360px);
+    }
+}
+
+@media (max-width: 480px) {
+
+    #telaInicial h1 {
+        font-size: 2.2rem;
+
+        letter-spacing: 4px;
+    }
+
+    #telaInicial p {
+        letter-spacing: 3px;
+    }
+
+    .player-controls {
+        width: 94%;
+
+        padding: 15px;
+
+        border-radius: 18px;
+    }
+
+    .img-wrapper {
+        padding-bottom: 180px;
+    }
+
+    .img-wrapper img {
+        width: min(43vh, 280px);
+        height: min(43vh, 280px);
+    }
+
+    .controls-buttons {
+        gap: 9px;
+    }
+
+    .controls-buttons button {
+        width: 40px;
+        height: 40px;
+
+        font-size: 0.95rem;
+    }
+
+    #btnPlayPause {
+        width: 54px;
+        height: 54px;
+    }
+
+    .music-title {
+        font-size: 0.9rem;
+    }
+
+    .playlist {
+        max-height: 240px;
+    }
+}
