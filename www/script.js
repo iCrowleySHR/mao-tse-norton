@@ -594,7 +594,7 @@ function loadMusic(index) {
 
                         musica
                             .play()
-                            .catch(() => {});
+                            .catch(() => { });
 
 
                         isPlaying = true;
@@ -648,7 +648,7 @@ function loadMusic(index) {
 
 
                 musica.play()
-                    .catch(() => {});
+                    .catch(() => { });
 
 
                 isPlaying = true;
@@ -685,7 +685,7 @@ function loadMusic(index) {
 
 
             musica.play()
-                .catch(() => {});
+                .catch(() => { });
 
 
             isPlaying = true;
@@ -729,7 +729,7 @@ function loadMusic(index) {
 
 
         musica.play()
-            .catch(() => {});
+            .catch(() => { });
 
 
         isPlaying = true;
@@ -817,7 +817,7 @@ function togglePlayPause() {
     else {
 
         musica.play()
-            .catch(() => {});
+            .catch(() => { });
 
 
         isPlaying = true;
@@ -1040,9 +1040,9 @@ function updatePlaylistUI() {
             li.onclick =
                 () => {
 
-                    loadMusic(
-                        index
-                    );
+                    loadMusic(index);
+
+                    playlist.classList.add("hidden");
 
                 };
 
