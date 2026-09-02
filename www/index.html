@@ -3,15 +3,74 @@
 
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mao Tse Norton - Player</title>
+    <title>Mao Tse Norton - Jeito Matter of Felling de Ser.</title>
+
+    <meta name="description"
+        content="Mao Tse Norton - Player de música e rádio online. Ouça Duran Duran, China, Kiss FM, Aspen FM e outras músicas e rádios online.">
+
+    <meta name="keywords"
+        content="Mao Tse Norton, player de música, rádio online, música online, Kiss FM, Aspen FM, Duran Duran, China">
+
+    <meta name="author" content="Mao Tse Norton">
+
+    <meta name="robots" content="index, follow">
+
+    <meta name="googlebot" content="index, follow">
+
+    <!-- Idioma e localização -->
+    <meta http-equiv="content-language" content="pt-BR">
+
+    <!-- Cor do navegador -->
+    <meta name="theme-color" content="#000000">
+
+    <!-- Open Graph - Facebook, WhatsApp, Discord etc. -->
+    <meta property="og:type" content="website">
+
+    <meta property="og:title" content="Mao Tse Norton - Player de Música e Rádio Online">
+
+    <meta property="og:description" content="Ouça músicas e rádios online no Mao Tse Norton.">
+
+    <meta property="og:site_name" content="Mao Tse Norton">
+
+    <meta property="og:locale" content="pt_BR">
+
+    <!-- Twitter/X -->
+    <meta name="twitter:card" content="summary">
+
+    <meta name="twitter:title" content="Mao Tse Norton - Player de Música e Rádio Online">
+
+    <meta name="twitter:description" content="Player de música e rádio online Mao Tse Norton.">
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://icrowleyshr.github.io/mao-tse-norton/">
+
+    <!-- Ícone -->
+    <link rel="icon" type="image/png" href="./img/norton.png">
 
     <!-- HLS.js -->
     <script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js"></script>
 
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FH5M8MEER8"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-FH5M8MEER8');
+    </script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7154017237552725"
+        crossorigin="anonymous"></script>
+
 </head>
+
 
 <body>
 
@@ -39,10 +98,7 @@
         <!-- Imagem -->
         <div class="img-wrapper">
 
-            <img
-                src="./img/norton.png"
-                alt="Mao Tse Norton"
-            >
+            <img src="./img/norton.png" alt="Mao Tse Norton">
 
         </div>
 
@@ -53,17 +109,11 @@
             <!-- Informações -->
             <div class="music-info">
 
-                <div
-                    class="music-title"
-                    id="musicTitle"
-                >
+                <div class="music-title" id="musicTitle">
                     Nenhuma música selecionada
                 </div>
 
-                <div
-                    class="music-source"
-                    id="musicSource"
-                >
+                <div class="music-source" id="musicSource">
                     📻 Rádio / Arquivo local
                 </div>
 
@@ -73,31 +123,19 @@
             <!-- Botões -->
             <div class="controls-buttons">
 
-                <button
-                    id="btnPrev"
-                    title="Anterior"
-                >
+                <button id="btnPrev" title="Anterior">
                     ⏮
                 </button>
 
-                <button
-                    id="btnPlayPause"
-                    title="Play/Pause"
-                >
+                <button id="btnPlayPause" title="Play/Pause">
                     ▶
                 </button>
 
-                <button
-                    id="btnNext"
-                    title="Próxima"
-                >
+                <button id="btnNext" title="Próxima">
                     ⏭
                 </button>
 
-                <button
-                    id="btnStop"
-                    title="Parar"
-                >
+                <button id="btnStop" title="Parar">
                     ⏹
                 </button>
 
@@ -107,25 +145,13 @@
             <!-- Progresso -->
             <div class="progress-container">
 
-                <span
-                    class="time-current"
-                    id="timeCurrent"
-                >
+                <span class="time-current" id="timeCurrent">
                     0:00
                 </span>
 
-                <input
-                    type="range"
-                    id="progressBar"
-                    min="0"
-                    max="100"
-                    value="0"
-                >
+                <input type="range" id="progressBar" min="0" max="100" value="0">
 
-                <span
-                    class="time-total"
-                    id="timeTotal"
-                >
+                <span class="time-total" id="timeTotal">
                     0:00
                 </span>
 
@@ -139,13 +165,7 @@
                     🔊
                 </span>
 
-                <input
-                    type="range"
-                    id="volumeControl"
-                    min="0"
-                    max="100"
-                    value="80"
-                >
+                <input type="range" id="volumeControl" min="0" max="100" value="80">
 
             </div>
 
@@ -153,18 +173,12 @@
             <!-- Playlist -->
             <div class="playlist-container">
 
-                <button
-                    id="btnTogglePlaylist"
-                    class="toggle-playlist"
-                >
+                <button id="btnTogglePlaylist" class="toggle-playlist">
                     📋 Playlist
                 </button>
 
 
-                <div
-                    id="playlist"
-                    class="playlist hidden"
-                >
+                <div id="playlist" class="playlist hidden">
 
                     <div class="playlist-header">
 
@@ -172,19 +186,11 @@
                             🎵 Playlist
                         </span>
 
-                        <button
-                            id="btnAddMusic"
-                            class="btn-add"
-                            style="display:none;"
-                        >
+                        <button id="btnAddMusic" class="btn-add" style="display:none;">
                             + Adicionar
                         </button>
 
-                        <button
-                            id="btnClearPlaylist"
-                            class="btn-clear"
-                            style="display:none;"
-                        >
+                        <button id="btnClearPlaylist" class="btn-clear" style="display:none;">
                             🗑 Limpar
                         </button>
 
@@ -196,17 +202,11 @@
 
                     <div class="playlist-footer">
 
-                        <button
-                            id="btnLoadPreset1"
-                            class="preset-btn"
-                        >
+                        <button id="btnLoadPreset1" class="preset-btn">
                             🎵 Clássicas
                         </button>
 
-                        <button
-                            id="btnLoadPreset2"
-                            class="preset-btn"
-                        >
+                        <button id="btnLoadPreset2" class="preset-btn">
                             📻 Rádio
                         </button>
 
@@ -228,20 +228,11 @@
 
 
     <!-- Player de áudio -->
-    <audio
-        id="musica"
-        preload="auto"
-    ></audio>
+    <audio id="musica" preload="auto"></audio>
 
 
     <!-- Upload -->
-    <input
-        type="file"
-        id="fileInput"
-        accept=".mp3,.aac,.wav,.ogg"
-        multiple
-        style="display:none;"
-    >
+    <input type="file" id="fileInput" accept=".mp3,.aac,.wav,.ogg" multiple style="display:none;">
 
 
     <script src="script.js"></script>
@@ -249,4 +240,3 @@
 </body>
 
 </html>
-
