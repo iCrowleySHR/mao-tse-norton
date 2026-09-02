@@ -67,12 +67,58 @@ function loadRadio(item) {
 
     if (item.src.includes(".m3u8")) {
         loadHLS(item);
-    } else {
+    } else if (item.src.includes(".m3u")) {
+        loadM3U(item);
+    }   
+    else {
         loadAAC(item);
     }
 
     if (item.radioId) {
         startNowPlaying();
+    }
+}
+
+async function loadM3U(item) {
+    try {
+        const response = await fetch(item.src, {
+            cache: "no-store"
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
+
+        const text = await response.text();
+
+        const streamUrl = text
+            .split("\n")
+            .map(line => line.trim())
+            .find(line =>
+                line &&
+                !line.startsWith("#")
+            );
+
+        if (!streamUrl) {
+            throw new Error("Nenhum stream encontrado no M3U");
+        }
+
+        elements.musica.src = streamUrl;
+        elements.musica.load();
+
+        await elements.musica.play();
+
+        state.isPlaying = true;
+        elements.btnPlayPause.textContent = "⏸";
+
+        updateStatus(`${item.title} • Tocando`);
+
+    } catch (error) {
+        console.error("Erro ao carregar M3U:", error);
+
+        updateStatus(
+            `❌ Não foi possível conectar à ${item.title}`
+        );
     }
 }
 
