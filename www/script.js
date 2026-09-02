@@ -89,6 +89,12 @@ const RADIOS = {
         nowPlaying:
             "https://np.tritondigital.com/public/nowplaying?mountName=ASPEN&numberToFetch=1"
 
+    },
+
+    maoTseNorton: {
+        title: "📻 Mao Tse Norton",
+        stream:
+            "https://morcast.caster.fm:19111/r70CY?token=d2bb83708667cfa9a7908c9dc245faeb"
     }
 
 };
@@ -137,6 +143,13 @@ const PRESETS = {
 
             radioId: "aspen"
 
+        },
+
+        {
+            title: RADIOS.maoTseNorton.title,
+            src: RADIOS.maoTseNorton.stream,
+            isRadio: true,
+            radioId: "maoTseNorton"
         }
 
     ]
@@ -242,35 +255,33 @@ function stopNowPlaying() {
 // BUSCAR NOW PLAYING
 // ======================================================
 
-async function updateNowPlaying() {
 
+
+async function updateNowPlaying() {
     if (!isRadio) {
         return;
     }
 
-
-    const item =
-        playlistArray[currentIndex];
-
+    const item = playlistArray[currentIndex];
 
     if (!item) {
         return;
     }
 
-
     if (!item.radioId) {
         return;
     }
 
-
-    const radio =
-        RADIOS[item.radioId];
-
+    const radio = RADIOS[item.radioId];
 
     if (!radio) {
         return;
     }
 
+    // Rádio sem Now Playing
+    if (!radio.nowPlaying) {
+        return;
+    }
 
     try {
 
@@ -553,8 +564,11 @@ function loadMusic(index) {
             item.title;
 
 
-        musicSource.textContent =
-            "📻 Conectando...";
+        if (item.radioId && RADIOS[item.radioId].nowPlaying) {
+            musicSource.textContent = "📻 Conectando...";
+        } else {
+            musicSource.textContent = "📻 Tocando";
+        }
 
 
         // ----------------------------------------------
@@ -1230,37 +1244,25 @@ function clearPlaylist() {
 // ======================================================
 
 function loadPreset(preset) {
-
     clearPlaylist();
 
+    preset.forEach(item => {
+        playlistArray.push({
+            title: item.title,
+            src: item.src,
+            isRadio: item.isRadio || false,
+            radioId: item.radioId || null
+        });
+    });
 
-    preset.forEach(
-        item => {
+    currentIndex = -1;
 
-            addToPlaylist(
+    musicTitle.textContent = "Selecione uma rádio";
+    musicSource.textContent = "Escolha uma rádio na playlist";
 
-                item.title,
+    updateStatus("Selecione uma rádio");
 
-                item.src,
-
-                item.isRadio || false,
-
-                item.radioId || null
-
-            );
-
-        }
-    );
-
-
-    if (
-        playlistArray.length > 0
-    ) {
-
-        loadMusic(0);
-
-    }
-
+    updatePlaylistUI();
 }
 
 
