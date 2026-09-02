@@ -1010,3 +1010,63 @@ body.playing {
         max-height: 240px;
     }
 }
+
+
+.caster-player {
+    position: absolute;
+
+    left: 50%;
+    bottom: 315px;
+
+    transform: translateX(-50%);
+
+    width: min(92%, 500px);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding: 8px;
+
+    z-index: 6;
+
+    pointer-events: auto;
+
+    background: rgba(0, 0, 0, 0.72);
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    border-radius: 16px;
+
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.45),
+        0 0 25px rgba(108, 43, 221, 0.12);
+}
+
+.caster-player.hidden {
+    display: none;
+}
+
+.caster-player .cstrEmbed {
+    width: 100%;
+    max-width: 500px;
+}
+
+
+/* Celular */
+@media (max-width: 480px) {
+
+    .caster-player {
+        width: 92%;
+        bottom: 350px;
+        padding: 5px;
+        border-radius: 14px;
+    }
+
+    .caster-player .cstrEmbed {
+        width: 100%;
+    }
+}

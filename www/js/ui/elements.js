@@ -4,6 +4,9 @@ export const elements = {
     musica: document.getElementById("musica"),
     audioStatus: document.getElementById("audioStatus"),
 
+    // Caster.fm
+    casterPlayer: document.getElementById("casterPlayer"),
+
     btnPlayPause: document.getElementById("btnPlayPause"),
     btnPrev: document.getElementById("btnPrev"),
     btnNext: document.getElementById("btnNext"),
@@ -29,4 +32,3 @@ export const elements = {
     btnLoadPreset1: document.getElementById("btnLoadPreset1"),
     btnLoadPreset2: document.getElementById("btnLoadPreset2")
 };
-

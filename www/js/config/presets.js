@@ -27,7 +27,7 @@ export const PRESETS = {
         },
         {
             title: RADIOS.maoTseNorton.title,
-            src: RADIOS.maoTseNorton.stream,
+            src: "",
             isRadio: true,
             radioId: "maoTseNorton"
         }

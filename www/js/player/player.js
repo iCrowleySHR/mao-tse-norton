@@ -7,6 +7,10 @@ import {
     startNowPlaying,
     stopNowPlaying
 } from "../radio/nowPlaying.js";
+import {
+    showCasterPlayer,
+    hideCasterPlayer
+} from "../radio/caster.js";
 import { updatePlaylistUI } from "../playlist/playlist.js";
 
 export function loadMusic(index) {
@@ -34,10 +38,17 @@ export function loadMusic(index) {
 
     stopNowPlaying();
 
+    // Esconde o Caster ao trocar de faixa
+    hideCasterPlayer();
+
+    // Destrói HLS anterior
     if (state.hls) {
         state.hls.destroy();
         state.hls = null;
     }
+
+    // Para áudio anterior
+    elements.musica.pause();
 
     state.isRadio =
         item.isRadio || false;
@@ -51,6 +62,7 @@ export function loadMusic(index) {
     updatePlaylistUI(loadMusic);
 }
 
+
 function loadRadio(item) {
     elements.musicTitle.dataset.nowPlaying = "";
     elements.musicTitle.textContent = item.title;
@@ -60,17 +72,77 @@ function loadRadio(item) {
             ? RADIOS[item.radioId]
             : null;
 
+    /*
+     * ============================================
+     * MAO TSE NORTON
+     * ============================================
+     *
+     * Não usamos o <audio> diretamente.
+     * O Caster.fm controla o próprio player.
+     */
+
+    if (item.radioId === "maoTseNorton") {
+
+        // Para qualquer áudio anterior
+        elements.musica.pause();
+        elements.musica.removeAttribute("src");
+        elements.musica.load();
+
+        // Para HLS anterior
+        if (state.hls) {
+            state.hls.destroy();
+            state.hls = null;
+        }
+
+        // Mostra Caster.fm
+        showCasterPlayer();
+
+        elements.musicTitle.textContent =
+            "📻 Mao Tse Norton";
+
+        elements.musicSource.textContent =
+            "📻 Caster.fm";
+
+        updateStatus(
+            "📻 Mao Tse Norton • Tocando"
+        );
+
+        /*
+         * O botão do player principal não controla
+         * o áudio do Caster.fm.
+         *
+         * Portanto deixamos como indicação de rádio.
+         */
+        state.isPlaying = true;
+
+        elements.btnPlayPause.textContent = "⏸";
+
+        return;
+    }
+
+    /*
+     * ============================================
+     * OUTRAS RÁDIOS
+     * ============================================
+     */
+
+    hideCasterPlayer();
+
     elements.musicSource.textContent =
         radio?.nowPlaying
             ? "📻 Conectando..."
             : "📻 Tocando";
 
     if (item.src.includes(".m3u8")) {
+
         loadHLS(item);
+
     } else if (item.src.includes(".m3u")) {
+
         loadM3U(item);
-    }   
-    else {
+
+    } else {
+
         loadAAC(item);
     }
 
@@ -78,6 +150,7 @@ function loadRadio(item) {
         startNowPlaying();
     }
 }
+
 
 async function loadM3U(item) {
     try {
@@ -233,23 +306,33 @@ function loadLocalMusic(item) {
 }
 
 export function togglePlayPause() {
+    const currentItem = state.playlist[state.currentIndex];
+
     if (state.playlist.length === 0) {
-        updateStatus(
-            "⚠️ Adicione músicas na playlist"
-        );
+        updateStatus("⚠️ Adicione músicas na playlist");
         return;
     }
 
+    /*
+     * Mao Tse Norton usa o player do Caster.fm.
+     * O <audio id="musica"> não controla esse player.
+     */
+    if (currentItem?.radioId === "maoTseNorton") {
+        updateStatus("📻 Use o controle do Caster.fm");
+        return;
+    }
+
+    /*
+     * Player normal
+     */
     if (state.isPlaying) {
         elements.musica.pause();
 
         state.isPlaying = false;
 
-        elements.btnPlayPause.textContent =
-            "▶";
+        elements.btnPlayPause.textContent = "▶";
 
         updateStatus("⏸ Pausado");
-
     } else {
         elements.musica
             .play()
@@ -257,8 +340,7 @@ export function togglePlayPause() {
 
         state.isPlaying = true;
 
-        elements.btnPlayPause.textContent =
-            "⏸";
+        elements.btnPlayPause.textContent = "⏸";
 
         updateStatus(
             state.isRadio
@@ -307,6 +389,27 @@ export function prevMusic() {
 }
 
 export function stopMusic() {
+    const currentItem =
+        state.playlist[state.currentIndex];
+
+    /*
+     * Mao Tse Norton usa o player Caster.fm
+     */
+    if (currentItem?.radioId === "maoTseNorton") {
+        state.isPlaying = false;
+
+        elements.btnPlayPause.textContent = "▶";
+
+        hideCasterPlayer();
+
+        updateStatus("⏹ Rádio parada");
+
+        return;
+    }
+
+    /*
+     * Player normal
+     */
     elements.musica.pause();
 
     if (!state.isRadio) {
@@ -315,19 +418,15 @@ export function stopMusic() {
 
     state.isPlaying = false;
 
-    elements.btnPlayPause.textContent =
-        "▶";
+    elements.btnPlayPause.textContent = "▶";
 
     elements.progressBar.value = 0;
 
-    elements.timeCurrent.textContent =
-        "0:00";
+    elements.timeCurrent.textContent = "0:00";
 
-    elements.timeTotal.textContent =
-        "0:00";
+    elements.timeTotal.textContent = "0:00";
 
     stopNowPlaying();
 
     updateStatus("⏹ Parado");
 }
-
