@@ -274,7 +274,8 @@ body.playing {
     align-items: center;
 
     pointer-events: none;
-
+    
+    z-index: 99;
     /*
        Reserva o espaço do painel de controles
        e coloca o vinil no centro da área superior.
@@ -287,8 +288,8 @@ body.playing {
 
     position: absolute;
 
-    width: min(60vh, 500px);
-    height: min(60vh, 500px);
+    width: min(30vh, 500px);
+    height: min(30vh, 500px);
 
     border-radius: 50%;
 
@@ -303,8 +304,8 @@ body.playing {
 .img-wrapper img {
     position: relative;
 
-    width: min(48vh, 420px);
-    height: min(48vh, 420px);
+    width: min(20vh, 420px);
+    height: min(20vh, 420px);
 
     object-fit: cover;
 
@@ -337,8 +338,8 @@ body.playing {
 
     position: absolute;
 
-    width: min(48vh, 420px);
-    height: min(48vh, 420px);
+    width: min(24vh, 420px);
+    height: min(24vh, 420px);
 
     border-radius: 50%;
 
