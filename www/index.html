@@ -4,11 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Mao Tse Norton - Player</title>
 
-    <!-- HLS.js para reproduzir m3u8 -->
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js">
-    </script>
+    <!-- HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js"></script>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -17,78 +17,236 @@
 
     <!-- Tela inicial -->
     <div id="telaInicial">
-        <h1>MAO TSE NORTON</h1>
-        <p>Player de Música</p>
-        <div class="play-icon">▶</div>
-        <div class="radio-info">Clique para começar</div>
-    </div>
 
-    <!-- Player Principal -->
-    <div id="player" class="hidden">
-        <!-- Imagem giratória -->
-        <div class="img-wrapper">
-            <img src="./img/norton.png" alt="Mao Tse Norton">
+        <h1>MAO TSE NORTON</h1>
+
+        <p>Player de Música</p>
+
+        <div class="play-icon">
+            ▶
         </div>
 
-        <!-- Controles do Player -->
+        <div class="radio-info">
+            Clique para começar
+        </div>
+
+    </div>
+
+
+    <!-- Player -->
+    <div id="player" class="hidden">
+
+        <!-- Imagem -->
+        <div class="img-wrapper">
+
+            <img
+                src="./img/norton.png"
+                alt="Mao Tse Norton"
+            >
+
+        </div>
+
+
+        <!-- Controles -->
         <div class="player-controls">
-            <!-- Info da música -->
+
+            <!-- Informações -->
             <div class="music-info">
-                <div class="music-title" id="musicTitle">Nenhuma música selecionada</div>
-                <div class="music-source" id="musicSource">📻 Rádio / Arquivo local</div>
+
+                <div
+                    class="music-title"
+                    id="musicTitle"
+                >
+                    Nenhuma música selecionada
+                </div>
+
+                <div
+                    class="music-source"
+                    id="musicSource"
+                >
+                    📻 Rádio / Arquivo local
+                </div>
+
             </div>
 
-            <!-- Botões de controle -->
+
+            <!-- Botões -->
             <div class="controls-buttons">
-                <button id="btnPrev" title="Anterior">⏮</button>
-                <button id="btnPlayPause" title="Play/Pause">▶</button>
-                <button id="btnNext" title="Próxima">⏭</button>
-                <button id="btnStop" title="Parar">⏹</button>
+
+                <button
+                    id="btnPrev"
+                    title="Anterior"
+                >
+                    ⏮
+                </button>
+
+                <button
+                    id="btnPlayPause"
+                    title="Play/Pause"
+                >
+                    ▶
+                </button>
+
+                <button
+                    id="btnNext"
+                    title="Próxima"
+                >
+                    ⏭
+                </button>
+
+                <button
+                    id="btnStop"
+                    title="Parar"
+                >
+                    ⏹
+                </button>
+
             </div>
+
 
             <!-- Progresso -->
             <div class="progress-container">
-                <span class="time-current" id="timeCurrent">0:00</span>
-                <input type="range" id="progressBar" min="0" max="100" value="0">
-                <span class="time-total" id="timeTotal">0:00</span>
+
+                <span
+                    class="time-current"
+                    id="timeCurrent"
+                >
+                    0:00
+                </span>
+
+                <input
+                    type="range"
+                    id="progressBar"
+                    min="0"
+                    max="100"
+                    value="0"
+                >
+
+                <span
+                    class="time-total"
+                    id="timeTotal"
+                >
+                    0:00
+                </span>
+
             </div>
+
 
             <!-- Volume -->
             <div class="volume-container">
-                <span class="volume-icon">🔊</span>
-                <input type="range" id="volumeControl" min="0" max="100" value="80">
+
+                <span class="volume-icon">
+                    🔊
+                </span>
+
+                <input
+                    type="range"
+                    id="volumeControl"
+                    min="0"
+                    max="100"
+                    value="80"
+                >
+
             </div>
 
-            <!-- Lista de reprodução -->
+
+            <!-- Playlist -->
             <div class="playlist-container">
-                <button id="btnTogglePlaylist" class="toggle-playlist">📋 Playlist</button>
-                <div id="playlist" class="playlist hidden">
+
+                <button
+                    id="btnTogglePlaylist"
+                    class="toggle-playlist"
+                >
+                    📋 Playlist
+                </button>
+
+
+                <div
+                    id="playlist"
+                    class="playlist hidden"
+                >
+
                     <div class="playlist-header">
-                        <span style="margin-bottom: 5px;">🎵 Playlist</span>
-                        <button id="btnAddMusic" class="btn-add" style="display: none;">+ Adicionar</button>
-                        <button id="btnClearPlaylist" class="btn-clear" style="display: none;">🗑 Limpar</button>
+
+                        <span>
+                            🎵 Playlist
+                        </span>
+
+                        <button
+                            id="btnAddMusic"
+                            class="btn-add"
+                            style="display:none;"
+                        >
+                            + Adicionar
+                        </button>
+
+                        <button
+                            id="btnClearPlaylist"
+                            class="btn-clear"
+                            style="display:none;"
+                        >
+                            🗑 Limpar
+                        </button>
+
                     </div>
+
+
                     <ul id="playlistItems"></ul>
+
+
                     <div class="playlist-footer">
-                        <button id="btnLoadPreset1" class="preset-btn">🎵 Clássicas</button>
-                        <button id="btnLoadPreset2" class="preset-btn">📻 Rádio</button>
+
+                        <button
+                            id="btnLoadPreset1"
+                            class="preset-btn"
+                        >
+                            🎵 Clássicas
+                        </button>
+
+                        <button
+                            id="btnLoadPreset2"
+                            class="preset-btn"
+                        >
+                            📻 Rádio
+                        </button>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
+
         <!-- Status -->
-        <div id="audioStatus">📻 Pronto para tocar</div>
+        <div id="audioStatus">
+            📻 Pronto para tocar
+        </div>
+
     </div>
 
-    <!-- Áudio oculto -->
-    <audio id="musica" preload="auto"></audio>
 
-    <!-- Input para adicionar arquivos (oculto) -->
-    <input type="file" id="fileInput" accept=".mp3,.aac,.wav,.ogg" multiple style="display:none">
+    <!-- Player de áudio -->
+    <audio
+        id="musica"
+        preload="auto"
+    ></audio>
+
+
+    <!-- Upload -->
+    <input
+        type="file"
+        id="fileInput"
+        accept=".mp3,.aac,.wav,.ogg"
+        multiple
+        style="display:none;"
+    >
+
 
     <script src="script.js"></script>
 
 </body>
 
 </html>
+
